@@ -1,0 +1,13 @@
+{
+    "site": "瞭望哨",
+    "styles": [
+      "../libs/elementUI/index.css",
+      "../libs/font/iconfont.css",
+      "../css/global.css"
+    ],
+    "scripts": [
+      "../js/vue.js",
+      "../libs/elementUI/index.js",
+      "../js/global.js"
+    ]
+}

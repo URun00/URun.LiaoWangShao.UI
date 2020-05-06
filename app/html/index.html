@@ -1,0 +1,210 @@
+<%- include('../templates/head') %>
+<body>
+<div id="index">
+    <%- include('../templates/header') %>
+    <div class="container">
+        <%- include('../templates/left') %>
+        <div class="content">
+            <div class="title">
+                <div class="title-text">任务编号：234231029431</div>
+                <div class="btn-group">
+                    <a href="javascript:void(0)" class="hollow-btn">返回</a>
+                </div>
+            </div>
+            <div class="circulation-box">
+                <div class="cir-img-left">
+                    <img src="../images/circulation.png">
+                    <div class="cir-text">
+                        <p class="green cir-big-title">流转中</p>
+                        <p class="week-small-text">状 态</p>
+                    </div>
+                </div>
+                <div class="cir-list-center">
+                    <ul class="cir-all">
+                        <% var list=[
+                         { name:'上  报  人' ,result:'曲丽丽'},
+                         { name:'上报单位' ,result:'上城区'},
+                         { name:'用户角色' ,result:'区管理员'},
+                         { name:'通知方式' ,result:'短信、APP'},
+                         { name:'上报时间' ,result:'2017-01-10'},
+                        ] ;for(var i in list){%>
+                        <li class="cir-item">
+                            <span class="week-small-text"><%= list[i].name %>：</span>
+                            <span class="cir-result"><%= list[i].result %></span>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="cir-btn-right">
+                    <a href="javascript:void(0)" class="solid-btn">继续上报</a>
+                    <a href="javascript:void(0)" class="solid-btn">已办结</a>
+                    <a href="javascript:void(0)" class="solid-btn">已处理</a>
+                </div>
+            </div>
+            <div class="cont-box">
+                <div class="title-two">
+                    <template>
+                        <el-tabs v-model="activeName" @tab-click="handleClick">
+                            <el-tab-pane label="任务详情" name="first">
+                                <div class="task-details">
+                                    <ul class="task-all">
+                                        <li class="task-item">
+                                            <div class="title-three">
+                                                上报内容
+                                            </div>
+                                            <ul class="task-child">
+                                                <% var list=[
+                                                { name:'上报等级' ,result:' 一级 '},
+                                                { name:'任务类型' ,result:'评论'},
+                                                { name:'上报标题' ,result:'应届毕业生落户广州更方便，只需到公安机关审核办理即可'},
+                                                { name:'上报内容' ,result:'该微博内容可作为宣传内容'},
+                                                { name:'上报链接' ,result:' http://gz.southcn.com/content/2019-06/17/content_187988230.htm '},
+                                                { name:'附    件' ,result:'2017-01-10'},
+                                                ] ;for(var i in list){%>
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text"><%= list[i].name %>：</span>
+                                                    <% if(list[i].name=='附    件'){ %>
+                                                    <div class="enclosure-down">
+                                                       <div class="en-child">
+                                                           <i class="iconfont icon-Relevant"></i>
+                                                           <span class="en-text">相关附件.jpg</span>
+                                                           <a href="javascript:void(0)" class="en-down"><i class="iconfont icon-download"></i></a>
+                                                       </div>
+                                                    </div>
+                                                    <% }else{ %>
+                                                    <span class="cir-result <%= list[i].name=='上报链接'?'blue':''%>  "><%= list[i].result %></span>
+                                                    <% } %>
+                                                </li>
+                                                <% } %>
+                                            </ul>
+                                        </li>
+                                        <li class="task-item">
+                                            <div class="title-three">接收单位/人员</div>
+                                            <div class="receive-people">
+                                                <ul class="receive-all">
+                                                    <li class="receive-item">
+                                                        <div class="re-top">
+                                                            <span class="title-four">直通哨</span>
+                                                            <span class="yellow">（未完成）（考核数：210）</span>
+                                                            <a href="javascript:void(0)" class="top-btn"><i class="iconfont icon-icon_2"></i></a>
+                                                        </div>
+                                                        <div class="circulation-box">
+                                                            <ul class="cir-all">
+                                                                <% for(var i=0;i<3;i++){ %>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="receive-item">
+                                                        <div class="re-top">
+                                                            <span class="title-four">市直部门</span>
+                                                            <span class="blue">（已完成）（考核数：100）</span>
+                                                            <a href="javascript:void(0)" class="top-btn"><i class="iconfont icon-icon_2"></i></a>
+                                                        </div>
+                                                        <div class="circulation-box">
+                                                            <ul class="cir-all">
+                                                                <% for(var i=0;i<3;i++){ %>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                <% } %>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="流水" name="second">
+                                <div class="table">
+                                    <template>
+                                        <el-table
+                                                :data="tableData"
+                                                style="width: 100%">
+                                            <el-table-column
+                                                    prop="date"
+                                                    label="时间"
+                                                    width="180">
+                                                <template slot-scope="scope">
+                                                   <div class="week-d">
+                                                       ${scope.row.date}
+                                                   </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="name"
+                                                    label="账号/姓名"
+                                                    width="180">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="matter"
+                                                    label="事项"
+                                                    >
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="company"
+                                                    label="单位">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.company}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="operation"
+                                                    label="操作端">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.operation}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="role"
+                                                    label="角色">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.role}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </template>
+                                </div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../templates/foot') %>
+<script>
+
+</script>
+</body>
+</html>

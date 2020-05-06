@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首页 - 瞭望哨</title>
+<meta name="renderer" content="webkit">
+
+<link rel="stylesheet" href="../libs/elementUI/index.css">
+<link rel="stylesheet" href="../libs/font/iconfont.css">
+<link rel="stylesheet" href="../css/global.css">
+
+<!--[if lt IE 9]>
+  <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<div id="index">
+    <div class="header">
+    <a href="javascript:void(0)" class="logo"><img src="../images/logo.png"></a>
+    <nav class="nav">
+        <ul class="nav-bar">
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">首页</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">检索</a>
+           </li>
+            
+           <li class="nav-item active ">
+               <a href="javascript:void(0)" class="nav-item-child">瞭望哨</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">预警</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">重点对象</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">专题分析</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">传播分析</a>
+           </li>
+            
+            <li class="nav-more">
+                <a href="javascript:void(0)"><i class="iconfont icon-more"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="set">
+        <div class="search">
+            <input type="text" class="search-input" placeholder="输入搜索关键词">
+            <span class="search-btn"><i class="iconfont icon-search"></i></span>
+        </div>
+        <div class="user">
+            <a href="javascript:void(0)" class="user-head"><img src="../images/hj.png"></a>
+            <div class="user-other">
+                <p class="user-name">Miss zhang  li</p>
+                <p class="user-welcome">welcome to come！</p>
+            </div>
+        </div>
+        <div class="message">
+            <a href="javascript:void(0)" class="mess-all">
+                <i class="iconfont icon-icon_11"></i>
+                <span class="mess-num">
+                    <i class="small-font">1</i>
+                </span>
+            </a>
+        </div>
+        <div class="seeting">
+            <a href="javascript:void(0)" class="setting-child"> <i class="iconfont icon-icon_3"></i></a>
+        </div>
+        <div class="close">
+            <a href="javascript:void(0)" class="close-child"> <i class="iconfont icon-icon_12"></i></a>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div class="left-box">
+    <ul class="left-rs">
+        <li v-for='(list,index) in pageArr' :key='index' :class="list.active?'active':''">
+            <a href="javascript:void(0)" class="rs-item top-btn showTag"  @click="slide($event)">
+                <i :class="['icon','iconfont',list.icon]"></i>
+                <span class="lr-text">${list.name}</span>
+                <i class="iconfont icon-icon_2"></i>
+            </a>
+            <ul class="left-box-child" style="height:0">
+                <li v-for="(item,index) in list.child"><a href="javascript:void(0)" class="rs-item-child">${item.name}</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+        <div class="content">
+            <div class="title">
+                <div class="title-text">任务编号：234231029431</div>
+                <div class="btn-group">
+                    <a href="javascript:void(0)" class="hollow-btn">返回</a>
+                </div>
+            </div>
+            <div class="circulation-box">
+                <div class="cir-img-left">
+                    <img src="../images/circulation.png">
+                    <div class="cir-text">
+                        <p class="green cir-big-title">流转中</p>
+                        <p class="week-small-text">状 态</p>
+                    </div>
+                </div>
+                <div class="cir-list-center">
+                    <ul class="cir-all">
+                        
+                        <li class="cir-item">
+                            <span class="week-small-text">上  报  人：</span>
+                            <span class="cir-result">曲丽丽</span>
+                        </li>
+                        
+                        <li class="cir-item">
+                            <span class="week-small-text">上报单位：</span>
+                            <span class="cir-result">上城区</span>
+                        </li>
+                        
+                        <li class="cir-item">
+                            <span class="week-small-text">用户角色：</span>
+                            <span class="cir-result">区管理员</span>
+                        </li>
+                        
+                        <li class="cir-item">
+                            <span class="week-small-text">通知方式：</span>
+                            <span class="cir-result">短信、APP</span>
+                        </li>
+                        
+                        <li class="cir-item">
+                            <span class="week-small-text">上报时间：</span>
+                            <span class="cir-result">2017-01-10</span>
+                        </li>
+                        
+                    </ul>
+                </div>
+                <div class="cir-btn-right">
+                    <a href="javascript:void(0)" class="solid-btn">继续上报</a>
+                    <a href="javascript:void(0)" class="solid-btn">已办结</a>
+                    <a href="javascript:void(0)" class="solid-btn">已处理</a>
+                </div>
+            </div>
+            <div class="cont-box">
+                <div class="title-two">
+                    <template>
+                        <el-tabs v-model="activeName" @tab-click="handleClick">
+                            <el-tab-pane label="任务详情" name="first">
+                                <div class="task-details">
+                                    <ul class="task-all">
+                                        <li class="task-item">
+                                            <div class="title-three">
+                                                上报内容
+                                            </div>
+                                            <ul class="task-child">
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">上报等级：</span>
+                                                    
+                                                    <span class="cir-result   "> 一级 </span>
+                                                    
+                                                </li>
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">任务类型：</span>
+                                                    
+                                                    <span class="cir-result   ">评论</span>
+                                                    
+                                                </li>
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">上报标题：</span>
+                                                    
+                                                    <span class="cir-result   ">应届毕业生落户广州更方便，只需到公安机关审核办理即可</span>
+                                                    
+                                                </li>
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">上报内容：</span>
+                                                    
+                                                    <span class="cir-result   ">该微博内容可作为宣传内容</span>
+                                                    
+                                                </li>
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">上报链接：</span>
+                                                    
+                                                    <span class="cir-result blue  "> http://gz.southcn.com/content/2019-06/17/content_187988230.htm </span>
+                                                    
+                                                </li>
+                                                
+                                                <li class="task-child-item">
+                                                    <span class="week-small-text">附    件：</span>
+                                                    
+                                                    <div class="enclosure-down">
+                                                       <div class="en-child">
+                                                           <i class="iconfont icon-Relevant"></i>
+                                                           <span class="en-text">相关附件.jpg</span>
+                                                           <a href="javascript:void(0)" class="en-down"><i class="iconfont icon-download"></i></a>
+                                                       </div>
+                                                    </div>
+                                                    
+                                                </li>
+                                                
+                                            </ul>
+                                        </li>
+                                        <li class="task-item">
+                                            <div class="title-three">接收单位/人员</div>
+                                            <div class="receive-people">
+                                                <ul class="receive-all">
+                                                    <li class="receive-item">
+                                                        <div class="re-top">
+                                                            <span class="title-four">直通哨</span>
+                                                            <span class="yellow">（未完成）（考核数：210）</span>
+                                                            <a href="javascript:void(0)" class="top-btn"><i class="iconfont icon-icon_2"></i></a>
+                                                        </div>
+                                                        <div class="circulation-box">
+                                                            <ul class="cir-all">
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="receive-item">
+                                                        <div class="re-top">
+                                                            <span class="title-four">市直部门</span>
+                                                            <span class="blue">（已完成）（考核数：100）</span>
+                                                            <a href="javascript:void(0)" class="top-btn"><i class="iconfont icon-icon_2"></i></a>
+                                                        </div>
+                                                        <div class="circulation-box">
+                                                            <ul class="cir-all">
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">接收人：</span>
+                                                                    <span class="week-small-text">曲丽丽</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">角色：</span>
+                                                                    <span class="week-small-text">联络员</span>
+                                                                </li>
+                                                                <li class="cir-item">
+                                                                    <span class="week-small-text">操作：</span>
+                                                                    <span class="week-small-text">转发任务</span>
+                                                                </li>
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="流水" name="second">
+                                <div class="table">
+                                    <template>
+                                        <el-table
+                                                :data="tableData"
+                                                style="width: 100%">
+                                            <el-table-column
+                                                    prop="date"
+                                                    label="时间"
+                                                    width="180">
+                                                <template slot-scope="scope">
+                                                   <div class="week-d">
+                                                       ${scope.row.date}
+                                                   </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="name"
+                                                    label="账号/姓名"
+                                                    width="180">
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="matter"
+                                                    label="事项"
+                                                    >
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="company"
+                                                    label="单位">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.company}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="operation"
+                                                    label="操作端">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.operation}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column
+                                                    prop="role"
+                                                    label="角色">
+                                                <template slot-scope="scope">
+                                                    <div class="week-d">
+                                                        ${scope.row.role}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                        </el-table>
+                                    </template>
+                                </div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/vue.js"></script>
+<script src="../libs/elementUI/index.js"></script>
+<script src="../js/global.js"></script>
+
+
+<script>
+
+</script>
+</body>
+</html>

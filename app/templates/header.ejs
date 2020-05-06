@@ -1,0 +1,42 @@
+<div class="header">
+    <a href="javascript:void(0)" class="logo"><img src="../images/logo.png"></a>
+    <nav class="nav">
+        <ul class="nav-bar">
+            <% var nav=['首页','检索','瞭望哨','预警','重点对象','专题分析','传播分析'];for(var i in nav){ %>
+           <li class="nav-item <%=  nav[i]=='瞭望哨'?'active':'' %> ">
+               <a href="javascript:void(0)" class="nav-item-child"><%= nav[i] %></a>
+           </li>
+            <% } %>
+            <li class="nav-more">
+                <a href="javascript:void(0)"><i class="iconfont icon-more"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="set">
+        <div class="search">
+            <input type="text" class="search-input" placeholder="输入搜索关键词">
+            <span class="search-btn"><i class="iconfont icon-search"></i></span>
+        </div>
+        <div class="user">
+            <a href="javascript:void(0)" class="user-head"><img src="../images/hj.png"></a>
+            <div class="user-other">
+                <p class="user-name">Miss zhang  li</p>
+                <p class="user-welcome">welcome to come！</p>
+            </div>
+        </div>
+        <div class="message">
+            <a href="javascript:void(0)" class="mess-all">
+                <i class="iconfont icon-icon_11"></i>
+                <span class="mess-num">
+                    <i class="small-font">1</i>
+                </span>
+            </a>
+        </div>
+        <div class="seeting">
+            <a href="javascript:void(0)" class="setting-child"> <i class="iconfont icon-icon_3"></i></a>
+        </div>
+        <div class="close">
+            <a href="javascript:void(0)" class="close-child"> <i class="iconfont icon-icon_12"></i></a>
+        </div>
+    </div>
+</div>

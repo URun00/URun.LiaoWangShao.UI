@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <!--禁止浏览器缓存-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <title>响应式二级导航栏</title>
+
+    <style type="text/css">
+        .same_module{border:1px solid grey;}
+        .title{color:#fff;height:30px;line-height:30px;background:blue;padding:0 10px;cursor: pointer;overflow: hidden;}
+        .title span{vertical-align:middle;}
+        .title .arrow{float: right;}
+        .detail{overflow: hidden;}
+        .detail .inner{padding:5px 10px;background: #808080;color:#fff;}
+        .detail p{line-height: 26px;}
+        .arrow{
+            display: inline-block;
+            border-top: 2px solid;
+            border-right: 2px solid;
+            width: 8px;
+            height: 8px;
+            border-color: #EA6000;
+            transform: rotate(315deg);
+            position: relative;
+            transition: all 0.5s ease-in;
+            transform-origin: center center;
+            top:50%;
+            margin-top:-10px;
+        }
+        .up .arrow{
+            transform: rotate(135deg);
+        }
+    </style>
+
+    <!-- <script src="./vue.min.js"></script> -->
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script><!--vue插件 视图层与数据分离-->
+
+</head>
+<body>
+<div id="app">
+    <template>
+        <div style="width:400px;margin:100px auto;">
+            <div class="con">
+                <div class="same_module">
+                    <div class="title up" @click="slide($event)"><span>标题一</span><i class="arrow"></i></div>
+                    <div class="detail" style="height:0">
+                        <div class="inner">
+                            <p>这是一段文本</p>
+                            <p>这是一段文本</p>
+                            <p>这是一段文本</p>
+                            <p>这是一段文本</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</div>
+
+<script type="text/javascript">
+    const vue = new Vue({
+        el: '#app',
+        data() {},
+        methods:{
+            slide:function(event){
+                let curTarget = event.currentTarget,
+                    containsCurClass = curTarget.classList.contains("up"),
+                    nextSibling = curTarget.nextSibling;
+                while(nextSibling.nodeType == 3 && /\s/.test(nextSibling.nodeValue)){
+                    nextSibling = nextSibling.nextSibling;
+                }
+                let detailScrollHeight = nextSibling.scrollHeight;
+                if(containsCurClass){
+                    curTarget.classList.remove("up");
+                    this.toggleSlide(nextSibling,detailScrollHeight,'500');
+                }else{
+                    curTarget.classList.add("up");
+                    this.toggleSlide(nextSibling,0,'500');
+                }
+            },
+            toggleSlide:function(dom,height,time){
+                dom.style.transition = 'height ' + time + 'ms';
+                dom.style.height = height + 'px';
+            }
+        }
+    })
+</script>
+</body>
+</html>
