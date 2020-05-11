@@ -1,0 +1,457 @@
+<%- include('../templates/head') %>
+<body>
+    <%- include('../templates/header') %>
+    <div class="container">
+        <%- include('../templates/left') %>
+        <div class="content" id="index">
+            <div class="title">
+                <div class="title-text">瞭望哨分析所</div>
+            </div>
+            <div class="cont-wrap">
+                <div class="cont-box">
+                    <div class="task-content">
+                        <div class="task-box task-three">
+                            <div class="title-three">热司云</div>
+                            <div class="chart-a" id="wordClouds"></div>
+                        </div>
+                        <div class="task-box task-two">
+                            <div class="title-three">一周任务增量</div>
+                            <div class="chart-b" id="areaBox"></div>
+                        </div>
+                    </div>
+                    <div class="table-box2">
+                        <div class="table">
+                            <template>
+                                <el-table
+                                        :data="tableData"
+                                        style="width: 100%"
+                                        @selection-change="handleSelectionChange"
+                                >
+                                    <el-table-column
+                                            type="selection"
+                                            width="55">
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="number"
+                                            label="序号"
+                                            width="80">
+                                        <template slot-scope="scope">
+                                            <div class="week-d">
+                                                ${scope.row.number}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="title"
+                                            label="任务标题"
+                                            width="360"
+                                    >
+                                        <template slot-scope="scope">
+                                            <div class="text-all">
+                                                ${scope.row.title}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="task"
+                                            label="任务类型"
+                                    >
+                                        <template slot-scope="scope">
+                                            <div class="week-d">
+                                                ${scope.row.task}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="Issued"
+                                            label="单位名称"
+                                    >
+                                        <template slot-scope="scope">
+                                            <div class="week-d">
+                                                ${scope.row.Issued}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="date"
+                                            label="发布时间"
+                                    >
+                                        <template slot-scope="scope">
+                                            <div class="week-d">
+                                                ${scope.row.date}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column
+                                            prop="endDate"
+                                            label="结束时间"
+                                    >
+                                        <template slot-scope="scope">
+                                            <div class="week-d">
+                                                ${scope.row.date}
+                                            </div>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+                            </template>
+                        </div>
+                        <div class="table-foot">
+                            <div class="foot-left">
+                                <a href="javascript:void(0)" class="solid-btn"><i class="iconfont icon-lujing84"></i>导出</a>
+                            </div>
+                            <div class="foot-right">
+                                <el-pagination
+                                        small
+                                        background
+                                        layout="prev, pager, next"
+                                        :total="50">
+                                </el-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../templates/foot') %>
+<script>
+    //echart基本样式
+    var optionStyle = {
+        legend: {
+            textStyle: {
+                color: '#243145',
+                fontSize: 14  //'108%'
+            },
+            icon: 'path://m43.75,145.74l0,0c0,-51.64 41.86,-93.5 93.5,-93.5l0,0c24.8,0 48.58,9.85 66.11,27.38c17.53,17.53 27.38,41.32 27.38,66.11l0,0c0,51.64 -41.86,93.5 -93.5,93.5l0,0c-51.64,0 -93.5,-41.86 -93.5,-93.5zm46.75,0l0,0c0,25.82 20.93,46.75 46.75,46.75c25.82,0 46.75,-20.93 46.75,-46.75c0,-25.82 -20.93,-46.75 -46.75,-46.75l0,0c-25.82,0 -46.75,20.93 -46.75,46.75z',
+            itemGap: 40
+        },
+        tooltip: {
+            backgroundColor: 'rgba(164,179,209,1)',
+            textStyle: {
+                fontSize: '108%',
+                color: '#243145'
+            },
+            extraCssText: 'box-shadow: 0px 0px 10px rgba(108,132,156,0.5)'
+        },
+        grid: {
+            top: '15%',
+            left: '4%', //5%
+            right: '4%',//10%
+            bottom: '5%',
+            containLabel: true
+        },
+        Axis: {
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                lineStyle: {
+                    color: 'rgba(255,255,255,0)'
+                }
+            },
+            axisLabel: {
+                margin: 15,
+                interval: 0,
+                textStyle: {
+                    fontSize: '14',
+                    color: '#9A9A9A'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#ECF2F6'
+                }
+            }
+        },
+        max : 500,
+    };
+
+    // 折线面积图
+    function lineArea(id, Obj) {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById(id));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#98B5F4'
+                    }
+                },
+                backgroundColor: optionStyle.tooltip.backgroundColor,
+                textStyle: optionStyle.tooltip.textStyle,
+                extraCssText: optionStyle.tooltip.extraCssText
+            },
+            grid: optionStyle.grid,
+            xAxis: {
+                boundaryGap: optionStyle.Axis.boundaryGap,
+                axisTick: optionStyle.Axis.axisTick,
+                axisLine: optionStyle.Axis.axisLine,
+                axisLabel: optionStyle.Axis.axisLabel,
+                data: ["02-01", "02-02", "02-03", "02-04", "02-05", "02-06", "02-07"]
+            },
+            yAxis: {
+                max:optionStyle.max,
+                interval: optionStyle.max/5,
+                axisTick: optionStyle.Axis.axisTick,
+                axisLabel: optionStyle.Axis.axisLabel,
+                axisLine: optionStyle.Axis.axisLine,
+                splitLine: optionStyle.Axis.splitLine
+            },
+            series: [
+                {
+                    name: '上报任务量',
+                    type: 'line',
+                    hoverAnimation: false,
+                    smooth: true,
+                    symbolSize: 9,
+                    itemStyle: {
+                        color: '#3D96FF'
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        color:'rgba(61,150,255,0.15)'
+                    },
+                    data: [75, 56, 36, 67, 298, 20,350]
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function() {
+            myChart.resize();
+        });
+    }
+
+    var js_content = new Vue({
+        el: '#index',
+        delimiters: ['${', '}'],
+        data() {
+            return {
+                word: [
+                    {
+                        name: "武汉加油",
+                        value: 666
+                    }, {
+                        name: "流窜作案",
+                        value: 520
+                    }, {
+                        name: "武汉加油",
+                        value: "999"
+                    }, {
+                        name: "野生动物",
+                        value: "888"
+                    }, {
+                        name: "新增病例",
+                        value: "777"
+                    }, {
+                        name: "联欢晚会",
+                        value: "688"
+                    }, {
+                        name: "联欢晚会",
+                        value: "588"
+                    }, {
+                        name: "新增病例",
+                        value: "516"
+                    }, {
+                        name: "新增病例",
+                        value: "515"
+                    }, {
+                        name: "境外疫情",
+                        value: "483"
+                    }, {
+                        name: "境外疫情",
+                        value: "462"
+                    }, {
+                        name: "省发改委",
+                        value: "449"
+                    }, {
+                        name: "省发改委",
+                        value: "429"
+                    }, {
+                        name: "春运",
+                        value: "407"
+                    }, {
+                        name: "联防联控",
+                        value: "406"
+                    }, {
+                        name: "联防联控",
+                        value: "406"
+                    }, {
+                        name: "危重症病",
+                        value: "386"
+                    }, {
+                        name: "危重症病",
+                        value: "385"
+                    }, {
+                        name: "野生动物",
+                        value: "375"
+                    }, {
+                        name: "野生动物",
+                        value: "355"
+                    }, {
+                        name: "野生动物",
+                        value: "355"
+                    }, {
+                        name: "联欢晚会",
+                        value: "335"
+                    }, {
+                        name: "联欢晚会",
+                        value: "324"
+                    }
+                ],
+                tableData: [
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        endDate:'2020-02-16  14:03:00',
+                    }
+                ]
+            }
+        },
+        methods: {
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            initWorldCloud() {
+                var myChart = echarts.init(document.getElementById('wordClouds'));
+                var wordCloudList = this.word;
+                var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    series: [{
+                        type: 'wordCloud', //类型为字符云
+                        shape: 'triangle', //平滑
+                        // size: ['50%', '50%'],
+                        left: 'center',// 居中
+                        width: '100%', //图像宽高
+                        height: '100%', //图像宽高
+                        gridSize: 15, //词与词之间的距离
+                        sizeRange: [12, 30],// 字体大小范围
+                        rotationRange: [0, 90],// 旋转的角度范围
+                        //rotationRange: [-45, 0, 45, 90],
+                        rotationStep: 90,// 每次旋转的角度步数
+                        drawOutOfBound: true, //设置为true以允许部分在画布外部绘制单词。允许字号大于要绘制的画布大小
+                        textStyle: {
+                            normal: {
+                                fontFamily: 'sans-serif',
+                                color: function() {
+                                    var colors = ['#409EFF', '#B2B2B2'];
+                                    return colors[parseInt(Math.random() * 2)];
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 5, //阴影距离
+                                shadowColor: '#333' //阴影颜色
+                            }
+                        },
+                        data: wordCloudList,
+                    }]
+                };
+                var maskImage = new Image();
+                maskImage.src = bgWorldImg;
+                maskImage.onload = function() {
+                    option.series[0].maskImage = maskImage;
+                    myChart.setOption(option)
+                }
+
+            },
+            // 实例化(更新)图表
+            updateEach(name) {
+                var myChart = echarts.init(document.getElementById(name));
+                myChart.setOption(this[name].option);
+                window.addEventListener("resize", function() {
+                    myChart.resize();
+                });
+            },
+        },
+        mounted() {
+            this.initWorldCloud();
+            lineArea('areaBox');
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,15 +1,18 @@
-<div class="left-box">
+<div id="left" class="left-box">
     <ul class="left-rs">
-        <li v-for='(list,index) in pageArr' :key='index' :class="list.active?'active':''">
+        <li v-for='(list,index) in pageArr' :key='index' :class="list.cur?'active':''">
             <a href="javascript:void(0)" class="rs-item top-btn showTag"  @click="slide($event)">
                 <i :class="['icon','iconfont',list.icon]"></i>
                 <span class="lr-text">${list.name}</span>
                 <i class="iconfont icon-icon_2"></i>
             </a>
             <ul class="left-box-child" style="height:0">
-                <li v-for="(item,index) in list.child"><a href="javascript:void(0)" class="rs-item-child">${item.name}</a></li>
+                <li v-for="(item,index) in list.child" @click='checkActive(item,index)' :key='index' :class="item.active?'active':''"><a href="javascript:void(0)" class="rs-item-child">${item.name}</a></li>
             </ul>
         </li>
     </ul>
+    <div class="menu">
+        <a href="javascript:void(0)" class="menu-icon"><i class="iconfont icon-icon_13"></i></a>
+    </div>
 </div>
 

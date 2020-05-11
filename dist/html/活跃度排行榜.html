@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>活跃度排行榜 - 瞭望哨</title>
+<meta name="renderer" content="webkit">
+
+<link rel="stylesheet" href="../libs/elementUI/index.css">
+<link rel="stylesheet" href="../libs/font/iconfont.css">
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/create.css">
+
+
+<!--[if lt IE 9]>
+  <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <div class="header">
+    <a href="javascript:void(0)" class="logo"><img src="../images/logo.png"></a>
+    <nav class="nav">
+        <ul class="nav-bar">
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">首页</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">检索</a>
+           </li>
+            
+           <li class="nav-item active ">
+               <a href="javascript:void(0)" class="nav-item-child">瞭望哨</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">预警</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">重点对象</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">专题分析</a>
+           </li>
+            
+           <li class="nav-item  ">
+               <a href="javascript:void(0)" class="nav-item-child">传播分析</a>
+           </li>
+            
+            <li class="nav-more">
+                <a href="javascript:void(0)"><i class="iconfont icon-more"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="set">
+        <div class="search">
+            <input type="text" class="search-input" placeholder="输入搜索关键词">
+            <span class="search-btn"><i class="iconfont icon-search"></i></span>
+        </div>
+        <div class="user">
+            <a href="javascript:void(0)" class="user-head"><img src="../images/hj.png"></a>
+            <div class="user-other">
+                <p class="user-name">Miss zhang  li</p>
+                <p class="user-welcome">welcome to come！</p>
+            </div>
+        </div>
+        <div class="message">
+            <a href="javascript:void(0)" class="mess-all">
+                <i class="iconfont icon-icon_11"></i>
+                <span class="mess-num">
+                    <i class="small-font">1</i>
+                </span>
+            </a>
+        </div>
+        <div class="seeting">
+            <a href="javascript:void(0)" class="setting-child"> <i class="iconfont icon-icon_3"></i></a>
+        </div>
+        <div class="close">
+            <a href="javascript:void(0)" class="close-child"> <i class="iconfont icon-icon_12"></i></a>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div id="left" class="left-box">
+    <ul class="left-rs">
+        <li v-for='(list,index) in pageArr' :key='index' :class="list.cur?'active':''">
+            <a href="javascript:void(0)" class="rs-item top-btn showTag"  @click="slide($event)">
+                <i :class="['icon','iconfont',list.icon]"></i>
+                <span class="lr-text">${list.name}</span>
+                <i class="iconfont icon-icon_2"></i>
+            </a>
+            <ul class="left-box-child" style="height:0">
+                <li v-for="(item,index) in list.child" @click='checkActive(item,index)' :key='index' :class="item.active?'active':''"><a href="javascript:void(0)" class="rs-item-child">${item.name}</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="menu">
+        <a href="javascript:void(0)" class="menu-icon"><i class="iconfont icon-icon_13"></i></a>
+    </div>
+</div>
+
+
+        <div class="content" id="index">
+            <div class="title">
+                <div class="title-text">活跃度排行榜</div>
+            </div>
+            <div class="drop-group">
+                <ul class="drop-all">
+                    <li class="drop-item">
+                       <span class="demonstration">单位：</span>
+                       <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                不限<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                           <el-dropdown-menu slot="dropdown">
+                               <el-dropdown-item>不限</el-dropdown-item>
+                               <el-dropdown-item>上城区哨所</el-dropdown-item>
+                           </el-dropdown-menu>
+                       </el-dropdown>
+                   </li>
+                    <li class="drop-item">
+                        <span class="demonstration">时间：</span>
+                        <div class="time-btn">
+                            <a href="javascript:void(0)" class="time-er-btn">今日</a>
+                            <a href="javascript:void(0)" class="time-er-btn">本周</a>
+                            <a href="javascript:void(0)" class="time-er-btn">本月</a>
+                            <a href="javascript:void(0)" class="time-er-btn hollow-btn">全年</a>
+                        </div>
+                        <div class="time-input">
+                            <el-date-picker
+                                    v-model="value1"
+                                    type="datetimerange"
+                                    range-separator="至"
+                                    start-placeholder=""
+                                    end-placeholder=""
+                                    prefix-icon="iconfont icon-date"
+                            >
+                            </el-date-picker>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="cont-wrap">
+                <div class="cont-box">
+                    <div class="title-two">
+                        <template>
+                            <el-tabs v-model="activeName" @tab-click="handleClick">
+                                <el-tab-pane label="任务数量" name="first">
+                                    <div class="task-content">
+                                        <div class="task-box task-one">
+                                            <div class="title-three">任务统计</div>
+                                            <el-row>
+                                                <el-col>
+                                                    <div class="re-item">
+                                                        <div class="ta-item-left">
+                                                            <i class="ta-img"><img src="../images/data1.png"></i>
+                                                            <p class="ta-text">上报任务量</p>
+                                                        </div>
+                                                        <div class="ta-item-right">
+                                                            <i class="ta-num">39254</i><i class="ta-unit">/  件</i>
+                                                        </div>
+                                                    </div>
+                                                </el-col>
+                                                <el-col>
+                                                    <div class="re-item">
+                                                        <div class="ta-item-left">
+                                                            <i class="ta-img"><img src="../images/data3.png"></i>
+                                                            <p class="ta-text">红色时限任务</p>
+                                                        </div>
+                                                        <div class="ta-item-right">
+                                                            <i class="ta-num">39254</i><i class="ta-unit">/  件</i>
+                                                        </div>
+                                                    </div>
+                                                </el-col>
+                                                <el-col>
+                                                    <div class="re-item">
+                                                        <div class="ta-item-left">
+                                                            <i class="ta-img"><img src="../images/data6.png"></i>
+                                                            <p class="ta-text">核实任务数量</p>
+                                                        </div>
+                                                        <div class="ta-item-right">
+                                                            <i class="ta-num">99</i><i class="ta-unit">/  件</i>
+                                                        </div>
+                                                    </div>
+                                                </el-col>
+                                            </el-row>
+                                        </div>
+                                        <div class="task-box task-two">
+                                            <div class="title-three">活动发布</div>
+                                            <div class="chart-b" id="areaBox"></div>
+                                        </div>
+                                    </div>
+                                </el-tab-pane>
+                                <el-tab-pane label="各危害级别的数量" name="second"></el-tab-pane>
+                                <el-tab-pane label="任务的各类型的数量" name="third"></el-tab-pane>
+                            </el-tabs>
+                        </template>
+                    </div>
+                    <div class="table-box">
+                        
+                        <div class="t-item">
+                            <div class="title-three">上报任务量</div>
+                            <div class="table">
+                                <template>
+                                    <el-table
+                                            :data="tableData"
+                                            style="width: 100%">
+                                        <el-table-column
+                                                prop="number"
+                                                label="序号"
+                                                width="80">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.number}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="company"
+                                                label="单位名称"
+                                        >
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="task"
+                                                label="任务数">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.task}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        <div class="t-item">
+                            <div class="title-three">核实任务数量</div>
+                            <div class="table">
+                                <template>
+                                    <el-table
+                                            :data="tableData"
+                                            style="width: 100%">
+                                        <el-table-column
+                                                prop="number"
+                                                label="序号"
+                                                width="80">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.number}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="company"
+                                                label="单位名称"
+                                        >
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="task"
+                                                label="任务数">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.task}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </div>
+                        </div>
+                        
+                        <div class="t-item">
+                            <div class="title-three">红色限时任务数量</div>
+                            <div class="table">
+                                <template>
+                                    <el-table
+                                            :data="tableData"
+                                            style="width: 100%">
+                                        <el-table-column
+                                                prop="number"
+                                                label="序号"
+                                                width="80">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.number}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="company"
+                                                label="单位名称"
+                                        >
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="task"
+                                                label="任务数">
+                                            <template slot-scope="scope">
+                                                <div class="week-d">
+                                                    ${scope.row.task}
+                                                </div>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                </template>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="../js/vue.js"></script>
+<script src="../libs/elementUI/index.js"></script>
+<script src="../js/global.js"></script>
+
+<script src="../libs/echarts/echarts.min.js"></script>
+
+
+<script>
+    //echart基本样式
+    var optionStyle = {
+        legend: {
+            textStyle: {
+                color: '#243145',
+                fontSize: 14  //'108%'
+            },
+            icon: 'path://m43.75,145.74l0,0c0,-51.64 41.86,-93.5 93.5,-93.5l0,0c24.8,0 48.58,9.85 66.11,27.38c17.53,17.53 27.38,41.32 27.38,66.11l0,0c0,51.64 -41.86,93.5 -93.5,93.5l0,0c-51.64,0 -93.5,-41.86 -93.5,-93.5zm46.75,0l0,0c0,25.82 20.93,46.75 46.75,46.75c25.82,0 46.75,-20.93 46.75,-46.75c0,-25.82 -20.93,-46.75 -46.75,-46.75l0,0c-25.82,0 -46.75,20.93 -46.75,46.75z',
+            itemGap: 40
+        },
+        tooltip: {
+            backgroundColor: 'rgba(164,179,209,1)',
+            textStyle: {
+                fontSize: '108%',
+                color: '#243145'
+            },
+            extraCssText: 'box-shadow: 0px 0px 10px rgba(108,132,156,0.5)'
+        },
+        grid: {
+            top: '15%',
+            left: '4%', //5%
+            right: '4%',//10%
+            bottom: '5%',
+            containLabel: true
+        },
+        Axis: {
+            boundaryGap: false,
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                lineStyle: {
+                    color: 'rgba(255,255,255,0)'
+                }
+            },
+            axisLabel: {
+                margin: 15,
+                interval: 0,
+                textStyle: {
+                    fontSize: '14',
+                    color: '#9A9A9A'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#ECF2F6'
+                }
+            }
+        },
+        max : 500,
+    };
+    // 折线面积图
+    function lineArea(id, Obj) {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById(id));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#98B5F4'
+                    }
+                },
+                backgroundColor: optionStyle.tooltip.backgroundColor,
+                textStyle: optionStyle.tooltip.textStyle,
+                extraCssText: optionStyle.tooltip.extraCssText
+            },
+            grid: optionStyle.grid,
+            xAxis: {
+                boundaryGap: optionStyle.Axis.boundaryGap,
+                axisTick: optionStyle.Axis.axisTick,
+                axisLine: optionStyle.Axis.axisLine,
+                axisLabel: optionStyle.Axis.axisLabel,
+                data: ["02-01", "02-02", "02-03", "02-04", "02-05", "02-06", "02-07"]
+            },
+            yAxis: {
+                max:optionStyle.max,
+                interval: optionStyle.max/5,
+                axisTick: optionStyle.Axis.axisTick,
+                axisLabel: optionStyle.Axis.axisLabel,
+                axisLine: optionStyle.Axis.axisLine,
+                splitLine: optionStyle.Axis.splitLine
+            },
+            series: [
+                {
+                    name: '上报任务量',
+                    type: 'line',
+                    hoverAnimation: false,
+                    smooth: true,
+                    symbolSize: 9,
+                    itemStyle: {
+                        color: '#3D96FF'
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        color:'rgba(61,150,255,0.15)'
+                    },
+                    data: [75, 56, 36, 67, 298, 20,350]
+                },
+                {
+                    name: '核实任务数量',
+                    type: 'line',
+                    hoverAnimation: false,
+                    smooth: true,
+                    symbolSize: 9,
+                    itemStyle: {
+                        color: '#FCD353'
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        color:'rgba(252,211,83,0.15)'
+                    },
+                    data: [290, 210, 500, 300, 420, 280,360]
+                },
+                {
+                    name: '红色时限任务数量',
+                    type: 'line',
+                    hoverAnimation: false,
+                    smooth: true,
+                    symbolSize: 9,
+                    itemStyle: {
+                        color: '#FE2C55'
+                    },
+                    lineStyle: {
+                        normal: {
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        color:'rgba(254,44,85,0.15)'
+                    },
+                    data: [190, 100, 400, 200, 320, 180,160]
+                },
+            ],
+            legend: [{
+                itemWidth:10,
+                itemHeight:10,
+                icon: "rect",
+                right: '4%',
+                top: 0,
+                itemGap: 20,
+                textStyle: {
+                    color: '#9AA2B5',
+                    fontSize: 14,
+                },
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function() {
+            myChart.resize();
+        });
+    }
+    var js_content = new Vue({
+        el: '#index',
+        delimiters: ['${', '}'],
+        data() {
+            return {
+                value1: '',
+                activeName: 'first',
+                tableData: [
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                    {
+                        number:'01',
+                        company:'上城区',
+                        task:'30',
+                    },
+                ]
+            };
+        },
+        created() {
+        },
+        methods: {
+            init() {
+                lineArea('areaBox');
+            },
+            handleClick(tab, event) {
+                //console.log(tab, event);
+            }
+        },
+        mounted() {
+            this.init();
+        }
+    });
+</script>
+</body>
+</html>

@@ -16,6 +16,9 @@
 .yellow{
     color: #FAAD14;
 }
+.red{
+    color: #FE8358;
+}
 /* input 颜色 */
 .vr-input(@color-weak){
     &::-webkit-input-placeholder {
@@ -51,19 +54,67 @@
 .solid-btn{
     color: @module-color;
     background:@blue;
+    .icon-lujing84{
+        font-weight: normal;
+        font-size: 9px;
+        display: inline-block;
+        transform: scale(0.7);
+        margin-right: 4px;
+    }
     &:hover{
         color: @module-color;
+    }
+}
+//上传文件按钮
+.up-file-btn{
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    padding: 0 14px;
+    height:23px;
+    line-height: 22px;
+    color: @module-color;
+    background:@blue;
+    border-radius:14px;
+    .iconfont{
+        font-size: 14px;
+        margin-right: 7px;
+    }
+    > input {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        font-size: 0;
+        cursor: pointer;
     }
 }
 /* 按钮 end */
 
 /* input框 start */
 .search-input{
-    width: 100%;
     height: 28px;
+    .vr-input(rgba(154,154,154,0.5));
+}
+.search-input,.search-two-input{
+    width: 100%;
     background:@module-color;
     outline: none;
-    .vr-input(rgba(154,154,154,0.5));
+}
+.search-two-input{
+    height: 100%;
+    .vr-input(rgba(75,75,75,0.5));
+}
+.pure-text{
+    width: 432px;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 3px;
+    .border(@line-weak-color);
+    .vr-input(@color-weak);
 }
 /* input框 end */
 
@@ -83,7 +134,7 @@
     text-overflow: ellipsis;
     display: block;
 }
-//多行文字省略#DEDEDE
+//多行文字省略
 .txtmore(@number){
     display: block;
     overflow: hidden;

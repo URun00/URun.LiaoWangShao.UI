@@ -1,5 +1,5 @@
 var app = new Vue({
-    el: '#index',
+    el: '#left',
     delimiters: ['${', '}'],
     data() {
         return {
@@ -8,20 +8,23 @@ var app = new Vue({
                 {
                     id: 1,
                     name: '任务分类上报',
-                    active: true,
+                    cur: true,
                     icon: 'icon-icon_5',
                     child: [
                         {
                             name: '全部',
-                            url: 'index.html'
+                            active: true,
+                            url: 'index.html',
                         },
                         {
                             name: '待处理',
-                            url: '待处理.html'
+                            active: false,
+                            url: '待处理-任务分类上报.html'
                         },
                         {
                             name: '已处理',
-                            url: '已处理.html'
+                            active: false,
+                            url: 'javascript:void(0)'
                         }
                     ]
                 },
@@ -33,15 +36,15 @@ var app = new Vue({
                     child: [
                         {
                             name: '全部',
-                            url: '核实反馈工作台.html'
+                            url: 'javascript:void(0)'
                         },
                         {
                             name: '待处理',
-                            url: '待处理.html'
+                            url: 'javascript:void(0)'
                         },
                         {
                             name: '已处理',
-                            url: '已处理.html'
+                            url: 'javascript:void(0)'
                         }
                     ]
                 }
@@ -66,7 +69,28 @@ var app = new Vue({
             ]
         };
     },
+    created() {
+        this.pageDetail=sessionStorage.getItem('page')?JSON.parse(sessionStorage.getItem('page')):this.pageArr[0].child;
+        this.setActive()
+    },
     methods: {
+        checkActive(item,index){
+            if(item.active) return;
+            this.pageArr[0].child.map(function(itemInfo,indexInfo){
+                itemInfo.active=false
+            });
+            this.pageArr[index].child.active=true;
+            this.pageDetail=this.pageArr[index].child;
+            location.href=item.url;
+            sessionStorage.setItem('page',JSON.stringify(item))
+        },
+        setActive(){
+            let that=this;
+            this.pageArr[0].child.map(function(itemInfo,indexInfo){
+                if(itemInfo.name!=that.pageDetail.name) itemInfo.active=false;
+                else itemInfo.active=true
+            })
+        },
         slide: function (event) {
             let curTarget = event.currentTarget,
                 containsCurClass = curTarget.classList.contains("showTag"),
@@ -93,98 +117,3 @@ var app = new Vue({
     }
 });
 
-
-/*
-var vm_dist;
-function jt(){
-    vm_dist = new Vue({
-        el: '#left',
-        delimiters: ['${','}'],
-        data() {
-            return {
-                showTag:true,
-                pageArr: [
-                    {
-                        id:1,
-                        name: '任务分类上报',
-                        active: true,
-                        icon: 'icon-icon_5',
-                        child:[
-                            {
-                                name:'全部',
-                                url: 'index.html'
-                            },
-                            {
-                                name:'待处理',
-                                url: '待处理.html'
-                            },
-                            {
-                                name:'已处理',
-                                url: '已处理.html'
-                            }
-                        ]
-                    },
-                    {
-                        id:2,
-                        name: '核实反馈工作台',
-                        active: false,
-                        icon: 'icon-icon_6',
-                        child:[
-                            {
-                                name:'全部',
-                                url: '核实反馈工作台.html'
-                            },
-                            {
-                                name:'待处理',
-                                url: '待处理.html'
-                            },
-                            {
-                                name:'已处理',
-                                url: '已处理.html'
-                            }
-                        ]
-                    },
-                ],
-                pageDetail: {},
-            };
-        },
-        created() {
-            this.pageDetail=sessionStorage.getItem('page')?JSON.parse(sessionStorage.getItem('page')):this.pageArr[0];
-            this.setActive()
-        },
-        methods: {
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            showNav(e){
-                this.showTag = this.showTag == e ? '' : e;
-            },
-            checkActive(item,index){
-                if(item.active) return;
-                this.pageArr.map(function(itemInfo,indexInfo){
-                    itemInfo.active=false
-                });
-                this.pageArr[index].active=true;
-                this.pageDetail=this.pageArr[index];
-                location.href=item.url;
-                sessionStorage.setItem('page',JSON.stringify(item))
-            },
-            setActive(){
-                let that=this;
-                this.pageArr.map(function(itemInfo,indexInfo){
-                    if(itemInfo.name!=that.pageDetail.name) itemInfo.active=false;
-                    else itemInfo.active=true
-                })
-            },
-        }
-    });
-}
-
-function init() {
-    jt();
-}
-
-init();*/

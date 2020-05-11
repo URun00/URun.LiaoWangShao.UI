@@ -1,0 +1,320 @@
+<%- include('../templates/head') %>
+<body>
+    <%- include('../templates/header') %>
+    <div class="container">
+        <%- include('../templates/left') %>
+        <div class="content" id="index">
+            <div class="title">
+                <div class="title-text">待处理-任务分类上报</div>
+                <div class="btn-group">
+                    <a href="javascript:void(0)" class="solid-btn">上报</a>
+                </div>
+            </div>
+            <div class="drop-group">
+                <ul class="drop-all">
+                    <li class="drop-item">
+                        <span class="demonstration">发布单位：</span>
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                不限<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>不限</el-dropdown-item>
+                                <el-dropdown-item>上城区哨所</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                    <li class="drop-item">
+                        <span class="demonstration">上报标题：</span>
+                        <div class="search-two">
+                            <input type="text" placeholder="关键词搜索" class="search-two-input">
+                            <span class="search-two-btn"><i class="iconfont icon-search"></i></span>
+                        </div>
+                    </li>
+                    <li class="drop-item">
+                        <span class="demonstration">危险等级：</span>
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                不限<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>不限</el-dropdown-item>
+                                <el-dropdown-item>一级</el-dropdown-item>
+                                <el-dropdown-item>二级</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                    <li class="drop-item">
+                        <span class="demonstration">状态：</span>
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                不限<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>不限</el-dropdown-item>
+                                <el-dropdown-item>已处理</el-dropdown-item>
+                                <el-dropdown-item>流转中</el-dropdown-item>
+                                <el-dropdown-item>已办结</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                    <li class="drop-item">
+                        <span class="demonstration">发布时间：</span>
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                不限<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>不限</el-dropdown-item>
+                                <el-dropdown-item>2个月</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </li>
+                </ul>
+
+
+            </div>
+            <div class="cont-wrap">
+                <div class="cont-box">
+                    <div class="table">
+                        <template>
+                            <el-table
+                                    :data="tableData"
+                                    style="width: 100%">
+                                <el-table-column
+                                        prop="number"
+                                        label="序号"
+                                        width="80">
+                                    <template slot-scope="scope">
+                                        <div class="week-d">
+                                            ${scope.row.number}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="title"
+                                        label="上报标题"
+                                        width="360"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="text-all">
+                                            ${scope.row.title}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="grade"
+                                        label="危害等级"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="week-d" :class="scope.row.grade=='二级'?'blue':'' || scope.row.grade=='三级'?'yellow':'' || scope.row.grade=='四级'?'red':''  ">
+                                            ${scope.row.grade}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="task"
+                                        label="任务类型"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="week-d">
+                                            ${scope.row.task}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="Issued"
+                                        label="发布单位"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="week-d">
+                                            ${scope.row.Issued}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="date"
+                                        label="时间"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="week-d">
+                                            ${scope.row.date}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="company"
+                                        label="接收单位">
+                                    <template slot-scope="scope">
+                                        <div class="week-d">
+                                            ${scope.row.company}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        prop="state"
+                                        label="状态"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="week-d" :class="scope.row.state=='流转中'?'green':'' || scope.row.state=='已办结'?'blue':''   ">
+                                            ${scope.row.state}
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column
+                                        label="操作"
+                                >
+                                    <template slot-scope="scope">
+                                        <div class="operation-d">
+                                            <a href="javascript:void(0)" class="oper-one oper">
+                                                <i class="iconfont icon-special"></i>
+                                                <span class="beautiful-hover">添加专题</span>
+                                            </a>
+                                            <a href="javascript:void(0)" class="oper-two oper">
+                                                <i class="iconfont icon-lujing195"></i>
+                                                <span class="beautiful-hover">发舆情库</span>
+                                            </a>
+                                            <a href="javascript:void(0)" class="oper-three oper">
+                                                <i class="iconfont icon-lujing194"></i>
+                                                <span class="beautiful-hover">发送钉钉</span>
+                                            </a>
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                    </div>
+                    <div class="table-foot">
+                        <div class="foot-left">
+                            <a href="javascript:void(0)" class="solid-btn"><i class="iconfont icon-lujing84"></i>导出</a>
+                        </div>
+                        <div class="foot-right">
+                            <el-pagination
+                                    small
+                                    background
+                                    layout="prev, pager, next"
+                                    :total="50">
+                            </el-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  弹框  -->
+            <el-dialog
+                    title="钉钉对外发送至涉事单位"
+                    :visible.sync="mission"
+                    width="750px"
+            >
+                <div class="send-all">
+                    <ul class="task-child">
+                        <% var list=[
+                        { name:'任务编号' ,result:'XGTS254568724 '},
+                        { name:'任务类型' ,result:'评论'},
+                        { name:'上报标题' ,result:'应届毕业生落户广州更方便，只需到公安机关审核办理即可'},
+                        { name:'上报内容' ,result:'该微博内容可作为宣传内容'},
+                        { name:'上报链接' ,result:' http://gz.southcn.com/content/2019-06/17/content_187988230.htm '},
+                        { name:'附    件' ,result:''},
+                        { name:'下发时间' ,result:'2019-09-03  19:50:00'},
+                        { name:'发布人' ,result:'黄时华'},
+                        { name:'发布单位' ,result:'上城区'},
+                        { name:'接收人' ,result:'吴茵'},
+                        { name:'接收单位' ,result: '市值单位'},
+                        { name:'状态' ,result:'未处理'},
+                        { name:'通知方式' ,result:'钉钉'},
+                        { name:'开始时间' ,result:'2019-09-03  19:50:00'},
+                        { name:'结束时间' ,result:'2019-09-03  19:50:00'},
+                        { name:'考核目标' ,result:' 按完成率100%'},
+                        { name:'自定义回复' ,result:''},
+                        ] ;for(var i in list){%>
+                        <li class="task-child-item  <%= list[i].name=='自定义回复'?'task-child-textArea ':''%> ">
+                            <span class="week-small-text"><%= list[i].name %>：</span>
+                            <% if(list[i].name=='附    件'){ %>
+                            <div class="enclosure-down">
+                                <div class="en-child">
+                                    <i class="iconfont icon-Relevant"></i>
+                                    <span class="en-text">相关附件.jpg</span>
+                                    <a href="javascript:void(0)" class="en-down"><i class="iconfont icon-download"></i></a>
+                                </div>
+                            </div>
+                            <% }else if(list[i].name=='自定义回复'){ %>
+                            <div class="textArea-all">
+                                <textarea placeholder="请输入描述内容，不可长于100个字" class="textArea-in"></textarea>
+                                <p class="ta-num">0/100</p>
+                            </div>
+                            <% }else{ %>
+                            <span class="cir-result <%= list[i].name=='上报链接'?'blue':''%>  "><%= list[i].result %></span>
+                            <% } %>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="mission = false">取 消</el-button>
+                    <el-button type="primary">确 定</el-button>
+                </span>
+            </el-dialog>
+        </div>
+    </div>
+<%- include('../templates/foot') %>
+<script>
+    var js_content = new Vue({
+        el: '#index',
+        delimiters: ['${', '}'],
+        data() {
+            return {
+                mission: true,
+                tableData: [
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        grade:'一级',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        company:'杭州市',
+                        state:'已处理',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        grade:'二级',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        company:'杭州市',
+                        state:'流转中',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        grade:'三级',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        company:'杭州市',
+                        state:'已办结',
+                    },
+                    {
+                        number:'01',
+                        title:'应届毕业生落户广州更方便，只需到公安机关审核办理即可',
+                        grade:'四级',
+                        task:'评论',
+                        Issued:'上城区哨所',
+                        date: '2020-02-16  14:03:00',
+                        company:'杭州市',
+                        state:'已办结',
+                    }
+                ]
+            };
+        },
+        created() {
+        },
+        methods: {
+            handleClick(tab, event) {
+                //console.log(tab, event);
+            }
+        }
+    });
+</script>
+</body>
+</html>

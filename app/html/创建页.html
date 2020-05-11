@@ -1,0 +1,137 @@
+<%- include('../templates/head') %>
+<body>
+    <%- include('../templates/header') %>
+    <div class="container">
+        <%- include('../templates/left') %>
+        <div class="content" id="index">
+            <div class="title">
+                <div class="title-text">任务分类上报</div>
+                <div class="btn-group">
+                    <a href="javascript:void(0)" class="hollow-btn">返回</a>
+                </div>
+            </div>
+            <div class="cont-wrap">
+                <div class="cont-box">
+                    <div class="create-all">
+                        <ul class="task-child">
+                            <li class="task-child-item ">
+                                <span class="week-small-text"><i class="red">*</i>任务类型：</span>
+                                <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                评论<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item>评论</el-dropdown-item>
+                                        <el-dropdown-item>评论22</el-dropdown-item>
+                                        <el-dropdown-item>为缓解迪拜的炎热干燥，阿联酋国家气象中心近日持续人工降雨持续</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                            </li>
+                            <li class="task-child-item ">
+                                <span class="week-small-text"><i class="red">*</i>任务标题：</span>
+                                <input type="text" class="pure-text" placeholder="请输入标题，不可长于40个字">
+                            </li>
+                            <li class="task-child-item task-child-textArea">
+                                <span class="week-small-text"><i class="red">*</i>任务内容：</span>
+                                <!-- 富文本编辑器 -->
+                                <script id="editor" type="text/plain" style="width:700px;height:180px;"></script>
+                            </li>
+                            <li class="task-child-item ">
+                                <span class="week-small-text">附件：</span>
+                                <div class="upload-file">
+                                    <div class="up-file-btn">
+                                        <i class="iconfont icon-upload"></i>
+                                        <input type="file">
+                                        上传文件
+                                    </div>
+                                    <p class="up-explain">支持扩展名：.doc .docx .pdf .jpg...</p>
+                                </div>
+                            </li>
+                            <li class="task-child-item ">
+                                <span class="week-small-text">任务链接：</span>
+                                <input type="text" class="pure-text" placeholder="请输入链接">
+                            </li>
+                            <li class="task-child-item small-drop">
+                                <span class="week-small-text"><i class="red">*</i>危害等级：</span>
+                                <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                一级<i class="iconfont icon-icon_2 drop-icon"></i>
+                            </span>
+                                    <el-dropdown-menu slot="dropdown">
+                                        <el-dropdown-item>一级</el-dropdown-item>
+                                        <el-dropdown-item>二级</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </el-dropdown>
+                            </li>
+                            <li class="task-child-item ">
+                                <span class="week-small-text"><i class="red">*</i>接收单位：</span>
+                                <span class="cir-result">上城区</span>
+                            </li>
+                            <li class="task-child-item ">
+                                <span class="week-small-text">通知方式：</span>
+                                <div class="create-radio-group">
+                                    <template>
+                                        <el-checkbox-group v-model="checkList">
+                                            <el-checkbox label="短信"></el-checkbox>
+                                            <el-checkbox label="APP"></el-checkbox>
+                                            <el-checkbox label="钉钉"></el-checkbox>
+                                        </el-checkbox-group>
+                                    </template>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="cont-footer">
+                        <a href="javascript:void(0)" class="hollow-btn">重置</a>
+                        <a href="javascript:void(0)" class="solid-btn">发布</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../templates/foot') %>
+<script>
+    // 编辑器
+    var ue = UE.getEditor('editor');
+   /* var ue = UE.getEditor('editor', {
+        toolbars: [
+            [
+                'undo', //撤销
+                'redo', //重做
+                'fontfamily', //字体
+                'fontsize', //字号
+                'bold', //加粗
+                'italic',//斜体
+                'underline',//下划线
+                'forecolor', //字体颜色
+                'horizontal', //分隔线
+                'indent',//首行缩进
+                'justifyleft', //居左对齐
+                'justifyright', //居右对齐
+                'justifycenter', //居中对齐
+                'justifyjustify', //两端对齐
+                'link', //超链接
+                'simpleupload',//单图上传
+                'insertimage',//多图上传
+            ]
+        ],
+        initialFrameWidth: '100%',
+        autoHeightEnabled: true,
+        autoFloatEnabled: true
+    });*/
+    var js_content = new Vue({
+        el: '#index',
+        delimiters: ['${', '}'],
+        data() {
+            return {
+                checkList: ['短信']
+            };
+        },
+        created() {
+        },
+        methods: {
+        }
+    });
+</script>
+</body>
+</html>

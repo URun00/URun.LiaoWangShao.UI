@@ -1,0 +1,11 @@
+{
+  "title": "瞭望哨分析所",
+  "styles": [
+    "../css/create.css"
+  ],
+  "scripts":[
+    "../libs/echarts/echarts.min.js",
+    "../libs/echarts/echarts-wordcloud.min.js",
+    "../js/bgWorldImg.js"
+  ]
+}

@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14542835",
+      "name": "date",
+      "font_class": "date",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "14499583",
+      "name": "upload",
+      "font_class": "upload",
+      "unicode": "e6bd",
+      "unicode_decimal": 59069
+    },
+    {
+      "icon_id": "14483187",
+      "name": "路径 84",
+      "font_class": "lujing84",
+      "unicode": "e6bc",
+      "unicode_decimal": 59068
+    },
+    {
+      "icon_id": "14481092",
+      "name": "special",
+      "font_class": "special",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    },
+    {
+      "icon_id": "14481093",
+      "name": "路径 195",
+      "font_class": "lujing195",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    },
+    {
+      "icon_id": "14481094",
+      "name": "路径 194",
+      "font_class": "lujing194",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
       "icon_id": "14438663",
       "name": "Relevant",
       "font_class": "Relevant",

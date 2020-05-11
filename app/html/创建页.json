@@ -1,0 +1,12 @@
+{
+  "title": "创建页",
+  "styles": [
+    "../css/create.css"
+  ],
+  "scripts":[
+    "../js/jquery.min.js",
+    "../libs/utf8-net/ueditor.config.js",
+    "../libs/utf8-net/ueditor.all.js",
+    "../libs/utf8-net/zh-cn.js"
+  ]
+}

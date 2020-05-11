@@ -1,0 +1,9 @@
+{
+  "title": "活跃度排行榜",
+  "styles": [
+    "../css/create.css"
+  ],
+  "scripts":[
+    "../libs/echarts/echarts.min.js"
+  ]
+}

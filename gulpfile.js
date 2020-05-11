@@ -136,6 +136,14 @@ gulp.task('copy', function(){
         './app/libs/font/**'
     ])
         .pipe(gulp.dest('./dist/libs/font'));
+    gulp.src([
+        './app/libs/utf8-net/**'
+    ])
+        .pipe(gulp.dest('./dist/libs/utf8-net'));
+    gulp.src([
+        './app/libs/echarts/**'
+    ])
+        .pipe(gulp.dest('./dist/libs/echarts'));
 });
 // ----------------静态页面开发流程----------------end
 

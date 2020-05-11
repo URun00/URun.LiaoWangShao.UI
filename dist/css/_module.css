@@ -15,6 +15,9 @@
 .yellow {
   color: #FAAD14;
 }
+.red {
+  color: #FE8358;
+}
 /* input 颜色 */
 /* 按钮 start */
 .hollow-btn,
@@ -35,16 +38,47 @@
   color: #fff;
   background: #3D96FF;
 }
+.solid-btn .icon-lujing84 {
+  font-weight: normal;
+  font-size: 9px;
+  display: inline-block;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  margin-right: 4px;
+}
 .solid-btn:hover {
   color: #fff;
+}
+.up-file-btn {
+  font-size: 12px;
+  position: relative;
+  display: inline-block;
+  padding: 0 14px;
+  height: 23px;
+  line-height: 22px;
+  color: #fff;
+  background: #3D96FF;
+  border-radius: 14px;
+}
+.up-file-btn .iconfont {
+  font-size: 14px;
+  margin-right: 7px;
+}
+.up-file-btn > input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  font-size: 0;
+  cursor: pointer;
 }
 /* 按钮 end */
 /* input框 start */
 .search-input {
-  width: 100%;
   height: 28px;
-  background: #fff;
-  outline: none;
 }
 .search-input::-webkit-input-placeholder {
   color: rgba(154, 154, 154, 0.5);
@@ -59,6 +93,50 @@
 }
 .search-input:-ms-input-placeholder {
   color: rgba(154, 154, 154, 0.5);
+}
+.search-input,
+.search-two-input {
+  width: 100%;
+  background: #fff;
+  outline: none;
+}
+.search-two-input {
+  height: 100%;
+}
+.search-two-input::-webkit-input-placeholder {
+  color: rgba(75, 75, 75, 0.5);
+}
+.search-two-input:-moz-placeholder {
+  color: rgba(75, 75, 75, 0.5);
+  opacity: 1;
+}
+.search-two-input::-moz-placeholder {
+  color: rgba(75, 75, 75, 0.5);
+  opacity: 1;
+}
+.search-two-input:-ms-input-placeholder {
+  color: rgba(75, 75, 75, 0.5);
+}
+.pure-text {
+  width: 432px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 3px;
+  border: 1px solid #DEDEDE;
+}
+.pure-text::-webkit-input-placeholder {
+  color: #9A9A9A;
+}
+.pure-text:-moz-placeholder {
+  color: #9A9A9A;
+  opacity: 1;
+}
+.pure-text::-moz-placeholder {
+  color: #9A9A9A;
+  opacity: 1;
+}
+.pure-text:-ms-input-placeholder {
+  color: #9A9A9A;
 }
 /* input框 end */
 .flex {
